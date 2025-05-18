@@ -190,6 +190,7 @@ class GPS9EntryConverter:
 
             position = Point(point.lat, point.lon)
             speed = self._units.Quantity(point.speed, self._units.mps)
+            speed3d = self._units.Quantity(point.speed3d, self._units.mps)
 
             fix = GPSFix(point.fix)
             calculated_fix = self._tracker.submit(GPSLockComponents(fix, position, speed.magnitude, point.dop))
@@ -209,6 +210,7 @@ class GPS9EntryConverter:
                     packet_index=self._units.Quantity(index, self._units.number),
                     point=position,
                     speed=speed,
+                    speed3d=speed3d,
                     alt=self._units.Quantity(point.alt, self._units.m),
                     gpsfix=calculated_fix.value,
                     gpslock=self._units.Quantity(calculated_fix.value),
